@@ -21,7 +21,7 @@
         }
     },
     "variables": {
-		"location": "[resourceGroup().location]"
+		"location": "[resourceGroup().location]",
 		"virtualMachineName": "[toLower(parameters('vmDnsNameForPublicIP'))]",
         "virtualMachineOsDiskName": "[concat(variables('virtualMachineName'),'-disk-os')]",
         "virtualNetworkName": "[concat(variables('virtualMachineName'),'-vnet')]",
