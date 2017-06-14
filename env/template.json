@@ -22,6 +22,7 @@
     },
     "variables": {
 		"virtualMachineName": "[toLower(parameters('vmDnsNameForPublicIP'))]",
+        "virtualMachineOsDiskName": "[concat(variables('virtualMachineName'),'-disk-os')]",
         "virtualNetworkName": "[concat(variables('virtualMachineName'),'-vnet')]",
         "networkInterfaceName": "[concat(variables('virtualMachineName'),'-nic')]",
         "networkSecurityGroupName": "[concat(variables('virtualMachineName'),'-nsg')]",
