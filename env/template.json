@@ -5,7 +5,7 @@
         "vmDnsNameForPublicIP": {
             "type": "string",
             "metadata": {
-                "description": "Globally unique DNS Name for the Public IP used to access the Java Dev Virtual Machine."
+                "description": "Globally unique DNS Name for the Public IP used to access the VSE Virtual Machine."
             }
         },
         "virtualMachineSize": {
