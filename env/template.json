@@ -21,8 +21,7 @@
         }
     },
     "variables": {
-        "virtualMachineName": "[toLower(parameters('vmDnsNameForPublicIP'))]",
-        "virtualMachineOsDiskName": "[concat(variables('virtualMachineName'),'-disk-os')]",
+		"virtualMachineName": "[toLower(parameters('vmDnsNameForPublicIP'))]",
         "virtualNetworkName": "[concat(variables('virtualMachineName'),'-vnet')]",
         "networkInterfaceName": "[concat(variables('virtualMachineName'),'-nic')]",
         "networkSecurityGroupName": "[concat(variables('virtualMachineName'),'-nsg')]",
@@ -47,19 +46,22 @@
                 "osProfile": {
                     "computerName": "[variables('virtualMachineName')]",
                     "adminUsername": "[parameters('adminUsername')]",
-                    "adminPassword": "[parameters('adminPassword')]"
+                    "adminPassword": "[parameters('adminPassword')]",
+                    "windowsConfiguration": {
+                        "provisionVmAgent": "true"
+                    }
                 },
                 "hardwareProfile": {
                     "vmSize": "[parameters('virtualMachineSize')]"
                 },
                 "storageProfile": {
                     "imageReference": {
-                        "publisher": "Canonical",
-                        "offer": "UbuntuServer",
-                        "sku": "16.04-LTS",
+                        "publisher": "MicrosoftWindowsServer",
+                        "offer": "WindowsServer",
+                        "sku": "2016-Datacenter",
                         "version": "latest"
                     },
-                    "osDisk": {
+                     "osDisk": {
                         "createOption": "FromImage",
                         "name": "[variables('virtualMachineOsDiskName')]",
                         "managedDisk": {
@@ -76,7 +78,7 @@
                     ]
                 }
             }
-        },
+        },		
         {
             "name": "[variables('virtualNetworkName')]",
             "type": "Microsoft.Network/virtualNetworks",
@@ -135,7 +137,7 @@
             "location": "[resourceGroup().location]",
             "properties": {
                 "publicIpAllocationMethod": "[variables('publicIpAddressType')]",
-                "dnsSettings": {
+				"dnsSettings": {
                     "domainNameLabel": "[parameters('vmDnsNameForPublicIP')]"
                 }
             }
@@ -148,92 +150,20 @@
             "properties": {
                 "securityRules": [
                     {
-                        "name": "allow-ssh",
+                        "name": "default-allow-rdp",
                         "properties": {
                             "priority": 1000,
                             "sourceAddressPrefix": "*",
-                            "protocol": "TCP",
-                            "destinationPortRange": "22",
+                            "protocol": "Tcp",
+                            "destinationPortRange": "3389",
                             "access": "Allow",
                             "direction": "Inbound",
                             "sourcePortRange": "*",
                             "destinationAddressPrefix": "*"
                         }
-                    },
-                    {
-                        "name": "allow-rdp",
-                            "properties": {
-                                "description": "RDP port",
-                                "protocol": "Tcp",
-                                "sourcePortRange": "*",
-                                "destinationPortRange": "3389",
-                                "sourceAddressPrefix": "*",
-                                "destinationAddressPrefix": "*",
-                                "access": "Allow",
-                                "priority": 1100,
-                                "direction": "Inbound"
-                            }
-                    },
-                    {
-                        "name": "allow-http-8080",
-                        "properties": {
-                            "description": "HTTP port",
-                            "protocol": "Tcp",
-                            "sourcePortRange": "*",
-                            "destinationPortRange": "8080",
-                            "sourceAddressPrefix": "*",
-                            "destinationAddressPrefix": "*",
-                            "access": "Allow",
-                            "priority": 1200,
-                            "direction": "Inbound"
-                        }
-                    },
-                    {
-                        "name": "allow-docker-2376",
-                        "properties": {
-                            "description": "HTTP port",
-                            "protocol": "Tcp",
-                            "sourcePortRange": "*",
-                            "destinationPortRange": "2376",
-                            "sourceAddressPrefix": "*",
-                            "destinationAddressPrefix": "*",
-                            "access": "Allow",
-                            "priority": 1210,
-                            "direction": "Inbound"
-                        }
                     }
                 ]
             }
-        },
-        {
-            "name": "[concat(variables('virtualMachineName'),'-configure-java-vm')]",
-            "apiVersion": "2015-01-01",
-            "type": "Microsoft.Resources/deployments",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "https://gallery.azure.com/artifact/20161101/microsoft.custom-script-linux-arm.2.0.50/Artifacts/MainTemplate.json"
-                },
-                "parameters": {
-                    "vmName": {
-                        "value": "[variables('virtualMachineName')]"
-                    },
-                    "location": {
-                        "value": "[resourceGroup().location]"
-                    },
-                    "fileUris": {
-                        "value": [
-                            "https://raw.githubusercontent.com/nwcadence/java-dev-vsts/v2/configure-java-vm.sh"
-                        ]
-                    },
-                    "commandToExecute": {
-                        "value": "[concat('bash configure-java-vm.sh ', parameters('adminUsername'), ' ', resourceGroup().location)]"
-                    }
-                }
-            },
-            "dependsOn": [
-                "[concat('Microsoft.Compute/virtualMachines/', variables('virtualMachineName'))]"
-            ]
         }
     ],
     "outputs": {
