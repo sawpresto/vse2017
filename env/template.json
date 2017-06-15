@@ -81,10 +81,10 @@
             }
         },
 		{
-			"name": "[concat(variables('virtualMachineName'),'-configure-windows-vm')]",
+			"name": "[concat(variables('virtualMachineName'),'/windows-config')]",
 			"type": "Microsoft.Compute/virtualMachines/extensions",
 			"apiVersion": "2015-06-15",
-			"location": "[variables('location')]",
+			"location": "[resourceGroup().location]",
 			"dependsOn": [
 				"[concat('Microsoft.Compute/virtualMachines/', variables('virtualMachineName'))]"
 			],
