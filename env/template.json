@@ -79,7 +79,30 @@
                     ]
                 }
             }
-        },		
+        },
+		{
+			"name": "[concat(variables('virtualMachineName'),'-configure-windows-vm')]",
+			"type": "Microsoft.Compute/virtualMachines/extensions",
+			"apiVersion": "2015-06-15",
+			"location": "[variables('location')]",
+			"dependsOn": [
+				"[concat('Microsoft.Compute/virtualMachines/', variables('virtualMachineName'))]"
+			],
+			"properties": {
+				"publisher": "Microsoft.Compute",
+				"type": "CustomScriptExtension",
+				"typeHandlerVersion": "1.4",
+				"autoUpgradeMinorVersion": true,
+				"settings": {
+					"fileUris": [
+						"https://raw.githubusercontent.com/sawpresto/vse2017/master/env/Configure-Windows-VM.ps1"
+					],
+				"commandToExecute": "powershell -File Configure-Windows-VM.ps1"
+				},
+				"protectedSettings": {
+				}
+			}
+		},
         {
             "name": "[variables('virtualNetworkName')]",
             "type": "Microsoft.Network/virtualNetworks",
