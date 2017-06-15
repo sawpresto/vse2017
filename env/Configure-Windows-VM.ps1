@@ -1,6 +1,6 @@
 param
 (
-    [string]$workloads
+    [string]$workloads = "Microsoft.VisualStudio.Component.TestTools.CodedUITest,Microsoft.VisualStudio.Component.TestTools.WebLoadTest,Microsoft.VisualStudio.Component.TestTools.Core,Microsoft.VisualStudio.Workload.Azure;includeRecommended,Microsoft.VisualStudio.Workload.NetWeb;includeRecommended;includeOptional,Microsoft.VisualStudio.Workload.Data;includeRecommended,Microsoft.VisualStudio.Workload.ManagedDesktop;includeRecommended;includeOptional,Microsoft.VisualStudio.Workload.NetCoreTools"
 )
 
 # Set PowerShell execution policy
