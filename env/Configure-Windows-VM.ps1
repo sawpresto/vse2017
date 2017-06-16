@@ -14,15 +14,12 @@ refreshenv
 & choco install dotnet4.6.1 -y
 #& choco install nodejs -y
 
-New-Item "C:\Temp" -Type Directory
 $vs_EnterpriseUrl = "https://aka.ms/vs/15/release/vs_enterprise.exe"
-$vs_Enterprise = "C:\Temp\vs_Enterprise.exe"
-
-Start-Sleep -Seconds 30
+$vs_Enterprise = "$($env:TEMP)\vs_Enterprise.exe"
 
 Invoke-WebRequest $vs_EnterpriseUrl -OutFile $vs_Enterprise
 
-$workloads -split ",[ ]{0,1}" | ForEach-Object {
+$workloads.Split(",[ ]{0,1}") | ForEach-Object {
     
     $workloadArgs += "--add $($_) "
 }
