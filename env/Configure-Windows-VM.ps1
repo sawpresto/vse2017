@@ -1,10 +1,7 @@
-param
-(
-    [string]$workloads = "Microsoft.VisualStudio.Component.TestTools.CodedUITest,Microsoft.VisualStudio.Component.TestTools.WebLoadTest,Microsoft.VisualStudio.Component.TestTools.Core,Microsoft.VisualStudio.Workload.Azure;includeRecommended,Microsoft.VisualStudio.Workload.NetWeb;includeRecommended;includeOptional,Microsoft.VisualStudio.Workload.Data;includeRecommended,Microsoft.VisualStudio.Workload.ManagedDesktop;includeRecommended;includeOptional,Microsoft.VisualStudio.Workload.NetCoreTools"
-)
+$workloads = "Microsoft.VisualStudio.Component.TestTools.CodedUITest"
 
 # Set PowerShell execution policy
-Set-ExecutionPolicy RemoteSigned -Force
+#Set-ExecutionPolicy RemoteSigned -Force
 
 # Install Chocolatey
 iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
@@ -21,6 +18,8 @@ New-Item "C:\Temp" -Type Directory
 $vs_EnterpriseUrl = "https://aka.ms/vs/15/release/vs_enterprise.exe"
 $vs_Enterprise = "C:\Temp\vs_Enterprise.exe"
 
+Start-Sleep -Seconds 30
+
 Invoke-WebRequest $vs_EnterpriseUrl -OutFile $vs_Enterprise
 
 $workloads -split ",[ ]{0,1}" | ForEach-Object {
@@ -34,5 +33,5 @@ Start-Process $vs_Enterprise $workloadParams -Wait
 
 refreshenv
 
-Start-Sleep -Seconds 60
-Restart-Computer
+#Start-Sleep -Seconds 60
+#Restart-Computer

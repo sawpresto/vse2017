@@ -93,7 +93,7 @@
             "name": "[concat(variables('virtualMachineName'),'/windows-config')]",
             "location": "[resourceGroup().location]",
             "dependsOn": [
-                "[concat('Microsoft.Compute/virtualMachines/', variables('virtualMachineName')]"
+                "[concat('Microsoft.Compute/virtualMachines/', variables('virtualMachineName'))]"
             ],
             "properties": {
                 "publisher": "Microsoft.Compute",
@@ -106,7 +106,7 @@
                     ]
                 },
                 "protectedSettings": {
-                    "commandToExecute": "powershell -ExecutionPolicy RemoteSigned -File Configure-Windows-VM.ps1"
+                    "commandToExecute": "powershell -ExecutionPolicy Unrestricted -File Configure-Windows-VM.ps1"
                 }
             }
         },
