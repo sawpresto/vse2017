@@ -88,27 +88,27 @@
             }
         },
         {
-            "apiVersion": "2015-06-15",
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "name": "[concat(variables('virtualMachineName'),'/windows-config')]",
+            "apiVersion": "2016-04-30-preview",
             "location": "[resourceGroup().location]",
-            "dependsOn": [
-                "[concat('Microsoft.Compute/virtualMachines/', variables('virtualMachineName'))]"
-            ],
+            "scale": null,
             "properties": {
                 "publisher": "Microsoft.Compute",
                 "type": "CustomScriptExtension",
-                "typeHandlerVersion": "1.8",
+                "typeHandlerVersion": "1.7",
                 "autoUpgradeMinorVersion": true,
                 "settings": {
                     "fileUris": [
                         "https://raw.githubusercontent.com/sawpresto/vse2017/master/env/Configure-Windows-VM.ps1"
-                    ]
+                    ],
+                    "commandToExecute": "powershell -ExecutionPolicy Unrestricted -File ./Configure-Windows-VM.ps1"
                 },
-                "protectedSettings": {
-                    "commandToExecute": "powershell -ExecutionPolicy Unrestricted -File Configure-Windows-VM.ps1"
-                }
-            }
+                "protectedSettings": {}
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/virtualMachines', variables('virtualMachineName'))]"
+            ]
         },
         {
             "name": "[variables('virtualNetworkName')]",
