@@ -15,7 +15,7 @@ refreshenv
 #& choco install nodejs -y
 
 $vs_EnterpriseUrl = "https://aka.ms/vs/15/release/vs_enterprise.exe"
-$vs_Enterprise = "$($env:TEMP)\vs_Enterprise.exe"
+$vs_Enterprise = "C:\Windows\Temp\vs_Enterprise.exe"
 
 Invoke-WebRequest $vs_EnterpriseUrl -OutFile $vs_Enterprise
 
