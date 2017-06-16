@@ -7,16 +7,16 @@ param
 #Set-ExecutionPolicy RemoteSigned -Force
 
 # Install Chocolatey
-iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
+#iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
 
 refreshenv
 
 # Install Chocolatey packages
-& choco install googlechrome -y
+<#& choco install googlechrome -y
 & choco install firefox -y
 & choco install poshgit -y
 & choco install dotnet4.6.1 -y
-& choco install nodejs -y
+& choco install nodejs -y#>
 
 $vs_EnterpriseUrl = "https://aka.ms/vs/15/release/vs_enterprise.exe"
 $vs_Enterprise = "C:\Windows\Temp\vs_Enterprise.exe"
