@@ -87,29 +87,31 @@
                 }
             }
         },
-		{
-			"name": "[concat(variables('virtualMachineName'),'/windows-config')]",
-			"type": "Microsoft.Compute/virtualMachines/extensions",
-			"apiVersion": "2015-06-15",
-			"location": "[resourceGroup().location]",
-			"dependsOn": [
-				"[concat('Microsoft.Compute/virtualMachines/', variables('virtualMachineName'))]"
-			],
-			"properties": {
-				"publisher": "Microsoft.Compute",
-				"type": "CustomScriptExtension",
-				"typeHandlerVersion": "1.4",
-				"autoUpgradeMinorVersion": true,
-				"settings": {
-					"fileUris": [
-						"https://raw.githubusercontent.com/sawpresto/vse2017/master/env/Configure-Windows-VM.ps1"
-					],
-				"commandToExecute": "powershell -File Configure-Windows-VM.ps1"
-				},
-				"protectedSettings": {
-				}
-			}
-		},
+        {
+            "name": "[concat(variables('virtualMachineName'),'/windows-config')]",
+            "apiVersion": "2015-01-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://gallery.azure.com/artifact/20161101/Microsoft.CustomScriptExtension-arm.2.0.50/Artifacts/MainTemplate.json"
+                },
+                "parameters": {
+                    "vmName": {
+                        "value": "[variables('virtualMachineName')]"
+                    },
+                    "location": {
+                        "value": "[resourceGroup().location]"
+                    },
+                    "fileUris": {
+                        "value": "https://raw.githubusercontent.com/sawpresto/vse2017/master/env/Configure-Windows-VM.ps1"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineName'))]"
+            ]
+        },
         {
             "name": "[variables('virtualNetworkName')]",
             "type": "Microsoft.Network/virtualNetworks",
