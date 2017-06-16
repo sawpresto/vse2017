@@ -27,7 +27,7 @@ refreshenv
 & choco install dotnet4.6.1 -y
 & choco install nodejs -y
 
-$vs_EnterpriseUrl = "https://aka.ms/vs/15/release/vs_enterprise.exe"
+<#$vs_EnterpriseUrl = "https://aka.ms/vs/15/release/vs_enterprise.exe"
 $vs_Enterprise = "$($env:TEMP)\vs_Enterprise.exe"
 
 Invoke-WebRequest $vs_EnterpriseUrl -OutFile $vs_Enterprise
@@ -44,4 +44,4 @@ Start-Process $vs_Enterprise $workloadParams -Wait
 refreshenv
 
 Start-Sleep -Seconds 60
-Restart-Computer
+Restart-Computer#>
