@@ -22,10 +22,10 @@ refreshenv
 refreshenv
 
 # Install Chocolatey packages
-& choco install googlechrome -y
-& choco install poshgit -y
+#& choco install googlechrome -y
+#& choco install poshgit -y
 & choco install dotnet4.6.1 -y
-& choco install nodejs -y
+#& choco install nodejs -y
 
 <#$vs_EnterpriseUrl = "https://aka.ms/vs/15/release/vs_enterprise.exe"
 $vs_Enterprise = "$($env:TEMP)\vs_Enterprise.exe"
