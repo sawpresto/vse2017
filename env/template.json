@@ -102,7 +102,7 @@
                     "fileUris": [
                         "https://raw.githubusercontent.com/sawpresto/vse2017/master/env/Configure-Windows-VM.ps1"
                     ],
-                    "commandToExecute": "powershell -ExecutionPolicy Unrestricted -File ./Configure-Windows-VM.ps1 -workloads [variables('visualStudioWorkloads')]"
+                    "commandToExecute": "powershell -ExecutionPolicy Unrestricted -File ./Configure-Windows-VM.ps1"
                 },
                 "protectedSettings": {}
             },
