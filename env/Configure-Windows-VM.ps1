@@ -33,5 +33,5 @@ refreshenv
 
 refreshenv
 
-#Start-Sleep -Seconds 60
-#Restart-Computer
+Start-Sleep -Seconds 60
+Restart-Computer
